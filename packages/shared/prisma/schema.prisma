@@ -1448,6 +1448,8 @@ model AlertHistory {
   status        AlertHistoryStatus @map("status")
   debuggingLink String             @map("debugging_link")
 
+  breakouts
+
   @@index([alertId])
   @@index([projectId])
   @@map("alert_history")
