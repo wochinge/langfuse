@@ -164,6 +164,25 @@ export const DashboardWidgetChartType = {
 } as const;
 export type DashboardWidgetChartType =
   (typeof DashboardWidgetChartType)[keyof typeof DashboardWidgetChartType];
+export const AlertStatus = {
+  ACTIVE: "ACTIVE",
+  MUTED: "MUTED",
+} as const;
+export type AlertStatus = (typeof AlertStatus)[keyof typeof AlertStatus];
+export const AlertOperator = {
+  GT: "GT",
+  GTE: "GTE",
+  LT: "LT",
+  LTE: "LTE",
+} as const;
+export type AlertOperator = (typeof AlertOperator)[keyof typeof AlertOperator];
+export const AlertHistoryStatus = {
+  ALERT: "ALERT",
+  OK: "OK",
+  JOB_ISSUE: "JOB_ISSUE",
+} as const;
+export type AlertHistoryStatus =
+  (typeof AlertHistoryStatus)[keyof typeof AlertHistoryStatus];
 export const ActionType = {
   WEBHOOK: "WEBHOOK",
   SLACK: "SLACK",
@@ -208,6 +227,30 @@ export type Action = {
   project_id: string;
   type: ActionType;
   config: unknown;
+};
+export type Alert = {
+  id: string;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
+  project_id: string;
+  name: string;
+  description: string;
+  status: AlertStatus;
+  view: DashboardWidgetViews;
+  dimensions: unknown;
+  metrics: unknown;
+  filters: unknown;
+  evaluation_window_seconds: number;
+  operator: AlertOperator;
+  threshold: number;
+};
+export type AlertHistory = {
+  id: string;
+  created_at: Generated<Timestamp>;
+  alert_id: string;
+  project_id: string;
+  status: AlertHistoryStatus;
+  debugging_link: string;
 };
 export type AnnotationQueue = {
   id: string;
@@ -950,6 +993,8 @@ export type VerificationToken = {
 export type DB = {
   Account: Account;
   actions: Action;
+  alert_history: AlertHistory;
+  alerts: Alert;
   annotation_queue_assignments: AnnotationQueueAssignment;
   annotation_queue_items: AnnotationQueueItem;
   annotation_queues: AnnotationQueue;
